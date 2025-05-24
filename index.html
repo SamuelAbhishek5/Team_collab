@@ -3,481 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Team Collaboration</title>
+    <title>TeamCollab - Team Collaboration Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar Navigation -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h2>TeamCollab2</h2>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>TeamCollab</h1>
+        </div>
+        <ul class="sidebar-menu">
+            <li data-section="dashboard" class="active">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </li>
+            <li data-section="projects">
+                <i class="fas fa-project-diagram"></i>
+                <span>Projects</span>
+            </li>
+            <li data-section="tasks">
+                <i class="fas fa-tasks"></i>
+                <span>Tasks</span>
+            </li>
+            <li data-section="documents">
+                <i class="fas fa-file-alt"></i>
+                <span>Documents</span>
+            </li>
+            <li data-section="team">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span id="current-user-name">Not logged in</span>
             </div>
-            <ul class="sidebar-menu">
-                <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-                <li data-section="projects"><i class="fas fa-project-diagram"></i> Pdsfrojects</li>
-                <li data-section="tasks"><i class="fas fa-tasks"></i> Tasks</li>
-                <li data-section="documents"><i class="fas fa-file-alt"></i> Documents</li>
-                <li data-section="team"><i class="fas fa-users"></i> Team</li>
-            </ul>
-            <div class="sidebar-footer">
-                <div id="user-profile">
-                    <div class="avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="user-info">
-                        <span id="current-user-name">Not logged in</span>
-                        <button id="login-btn">Login</button>
-                        <button id="logout-btn" style="display: none;">Logout</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
+            <button id="logout-btn" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </nav>
 
-        <!-- Main Content Area -->
-        <main id="content">
-            <!-- Authentication Section -->
-            <section id="auth-section" class="content-section">
-                <div class="auth-container">
-                    <div class="auth-form">
-                        <h2>Login</h2>
-                        <form id="login-form">
-                            <div class="form-group">
-                                <label for="login-email">Email</label>
-                                <input type="email" id="login-email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="login-password">Password</label>
-                                <input type="password" id="login-password" required>
-                            </div>
-                            <button type="submit" class="btn primary-btn">Login</button>
-                        </form>
-                        <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Authentication Section -->
+        <section id="auth-section" class="content-section">
+            <div class="auth-container">
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
                     </div>
-                    <div class="auth-form" style="display: none;">
-                        <h2>Register</h2>
-                        <form id="register-form">
-                            <div class="form-group">
-                                <label for="register-name">Full Name</label>
-                                <input type="text" id="register-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="register-email">Email</label>
-                                <input type="email" id="register-email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="register-password">Password</label>
-                                <input type="password" id="register-password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="register-role">Role</label>
-                                <select id="register-role" required>
-                                    <option value="developer">Developer</option>
-                                    <option value="designer">Designer</option>
-                                    <option value="project-manager">Project Manager</option>
-                                    <option value="tester">Tester</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn primary-btn">Register</button>
-                        </form>
-                        <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
                     </div>
-                </div>
-            </section>
+                    <button type="submit">Login</button>
+                    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+                </form>
 
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="content-section">
-                <h1>Dashboard</h1>
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
-                        <div class="stat-content">
-                            <h3>Projects</h3>
-                            <p id="projects-count">0</p>
-                        </div>
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form" style="display: none;">
+                    <h2>Register</h2>
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" required>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-tasks"></i></div>
-                        <div class="stat-content">
-                            <h3>Tasks</h3>
-                            <p id="tasks-count">0</p>
-                        </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
-                        <div class="stat-content">
-                            <h3>Documents</h3>
-                            <p id="docs-count">0</p>
-                        </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-users"></i></div>
-                        <div class="stat-content">
-                            <h3>Team Members</h3>
-                            <p id="users-count">0</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-row">
-                    <div class="dashboard-card">
-                        <h3>Recent Activities</h3>
-                        <div id="recent-activities" class="activity-list">
-                            <!-- Activities will be populated dynamically -->
-                        </div>
-                    </div>
-                    <div class="dashboard-card">
-                        <h3>Upcoming Deadlines</h3>
-                        <div id="upcoming-deadlines" class="deadline-list">
-                            <!-- Deadlines will be populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects" class="content-section">
-                <div class="section-header">
-                    <h1>Projects</h1>
-                    <button id="add-project-btn" class="btn primary-btn"><i class="fas fa-plus"></i> New Project</button>
-                </div>
-                
-                <div class="search-filter">
-                    <div class="search-box">
-                        <input type="text" id="project-search" placeholder="Search projects...">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="filter-controls">
-                        <select id="project-status-filter">
-                            <option value="all">All Status</option>
-                            <option value="in-progress">In Progress</option>
-                            <option value="completed">Completed</option>
-                            <option value="on-hold">On Hold</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="project-grid" id="projects-container">
-                    <!-- Projects will be populated dynamically -->
-                </div>
-
-                <!-- Add/Edit Project Modal -->
-                <div id="project-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2 id="project-modal-title">Add New Project</h2>
-                        <form id="project-form">
-                            <input type="hidden" id="project-id">
-                            <div class="form-group">
-                                <label for="project-name">Project Name</label>
-                                <input type="text" id="project-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="project-description">Description</label>
-                                <textarea id="project-description" required></textarea>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="project-start-date">Start Date</label>
-                                    <input type="date" id="project-start-date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="project-end-date">End Date</label>
-                                    <input type="date" id="project-end-date" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="project-status">Status</label>
-                                <select id="project-status" required>
-                                    <option value="in-progress">In Progress</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="on-hold">On Hold</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="project-team">Team Members</label>
-                                <select id="project-team" multiple>
-                                    <!-- Team members will be populated dynamically -->
-                                </select>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn primary-btn">Save Project</button>
-                                <button type="button" class="btn secondary-btn" id="cancel-project">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Project Details Modal -->
-                <div id="project-details-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <div id="project-details-content">
-                            <!-- Project details will be populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tasks Section -->
-            <section id="tasks" class="content-section">
-                <div class="section-header">
-                    <h1>Tasks</h1>
-                    <button id="add-task-btn" class="btn primary-btn"><i class="fas fa-plus"></i> New Task</button>
-                </div>
-                
-                <div class="search-filter">
-                    <div class="search-box">
-                        <input type="text" id="task-search" placeholder="Search tasks...">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="filter-controls">
-                        <select id="task-project-filter">
-                            <option value="all">All Projects</option>
-                            <!-- Projects will be populated dynamically -->
-                        </select>
-                        <select id="task-status-filter">
-                            <option value="all">All Status</option>
-                            <option value="todo">To Do</option>
-                            <option value="in-progress">In Progress</option>
-                            <option value="review">Review</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="kanban-board" id="tasks-container">
-                    <div class="kanban-column" id="todo-column">
-                        <h3>To Do</h3>
-                        <div class="task-list" id="todo-tasks">
-                            <!-- To Do tasks will be populated dynamically -->
-                        </div>
-                    </div>
-                    <div class="kanban-column" id="progress-column">
-                        <h3>In Progress</h3>
-                        <div class="task-list" id="progress-tasks">
-                            <!-- In Progress tasks will be populated dynamically -->
-                        </div>
-                    </div>
-                    <div class="kanban-column" id="review-column">
-                        <h3>Review</h3>
-                        <div class="task-list" id="review-tasks">
-                            <!-- Review tasks will be populated dynamically -->
-                        </div>
-                    </div>
-                    <div class="kanban-column" id="completed-column">
-                        <h3>Completed</h3>
-                        <div class="task-list" id="completed-tasks">
-                            <!-- Completed tasks will be populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add/Edit Task Modal -->
-                <div id="task-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2 id="task-modal-title">Add New Task</h2>
-                        <form id="task-form">
-                            <input type="hidden" id="task-id">
-                            <div class="form-group">
-                                <label for="task-title">Task Title</label>
-                                <input type="text" id="task-title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="task-description">Description</label>
-                                <textarea id="task-description" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="task-project">Project</label>
-                                <select id="task-project" required>
-                                    <!-- Projects will be populated dynamically -->
-                                </select>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="task-due-date">Due Date</label>
-                                    <input type="date" id="task-due-date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="task-priority">Priority</label>
-                                    <select id="task-priority" required>
-                                        <option value="low">Low</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="high">High</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="task-status">Status</label>
-                                <select id="task-status" required>
-                                    <option value="todo">To Do</option>
-                                    <option value="in-progress">In Progress</option>
-                                    <option value="review">Review</option>
-                                    <option value="completed">Completed</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="task-assignee">Assignee</label>
-                                <select id="task-assignee" required>
-                                    <!-- Team members will be populated dynamically -->
-                                </select>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn primary-btn">Save Task</button>
-                                <button type="button" class="btn secondary-btn" id="cancel-task">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Documents Section -->
-            <section id="documents" class="content-section">
-                <div class="section-header">
-                    <h1>Documents</h1>
-                    <button id="add-document-btn" class="btn primary-btn"><i class="fas fa-plus"></i> New Document</button>
-                </div>
-                
-                <div class="search-filter">
-                    <div class="search-box">
-                        <input type="text" id="document-search" placeholder="Search documents...">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="filter-controls">
-                        <select id="document-project-filter">
-                            <option value="all">All Projects</option>
-                            <!-- Projects will be populated dynamically -->
-                        </select>
-                        <select id="document-type-filter">
-                            <option value="all">All Types</option>
-                            <option value="documentation">Documentation</option>
-                            <option value="report">Report</option>
-                            <option value="design">Design</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="documents-grid" id="documents-container">
-                    <!-- Documents will be populated dynamically -->
-                </div>
-
-                <!-- Add/Edit Document Modal -->
-                <div id="document-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2 id="document-modal-title">Add New Document</h2>
-                        <form id="document-form">
-                            <input type="hidden" id="document-id">
-                            <div class="form-group">
-                                <label for="document-title">Document Title</label>
-                                <input type="text" id="document-title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="document-description">Description</label>
-                                <textarea id="document-description" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="document-project">Related Project</label>
-                                <select id="document-project" required>
-                                    <!-- Projects will be populated dynamically -->
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="document-type">Document Type</label>
-                                <select id="document-type" required>
-                                    <option value="documentation">Documentation</option>
-                                    <option value="report">Report</option>
-                                    <option value="design">Design</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="document-url">Document URL/Link</label>
-                                <input type="url" id="document-url" required placeholder="https://example.com/document">
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn primary-btn">Save Document</button>
-                                <button type="button" class="btn secondary-btn" id="cancel-document">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Team Members Section -->
-            <section id="team" class="content-section">
-                <div class="section-header">
-                    <h1>Team Members</h1>
-                    <button id="invite-team-btn" class="btn primary-btn"><i class="fas fa-user-plus"></i> Invite Member</button>
-                </div>
-                
-                <div class="search-filter">
-                    <div class="search-box">
-                        <input type="text" id="team-search" placeholder="Search team members...">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="filter-controls">
-                        <select id="team-role-filter">
-                            <option value="all">All Roles</option>
+                    <div class="form-group">
+                        <label for="register-role">Role</label>
+                        <select id="register-role" required>
                             <option value="developer">Developer</option>
                             <option value="designer">Designer</option>
-                            <option value="project-manager">Project Manager</option>
-                            <option value="tester">Tester</option>
+                            <option value="manager">Manager</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </div>
-                </div>
+                    <button type="submit">Register</button>
+                    <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+                </form>
+            </div>
+        </section>
 
-                <div class="team-grid" id="team-container">
-                    <!-- Team members will be populated dynamically -->
-                </div>
-
-                <!-- Invite Member Modal -->
-                <div id="invite-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <h2>Invite Team Member</h2>
-                        <form id="invite-form">
-                            <div class="form-group">
-                                <label for="invite-email">Email</label>
-                                <input type="email" id="invite-email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="invite-role">Role</label>
-                                <select id="invite-role" required>
-                                    <option value="developer">Developer</option>
-                                    <option value="designer">Designer</option>
-                                    <option value="project-manager">Project Manager</option>
-                                    <option value="tester">Tester</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="invite-projects">Assign to Projects</label>
-                                <select id="invite-projects" multiple>
-                                    <!-- Projects will be populated dynamically -->
-                                </select>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn primary-btn">Send Invitation</button>
-                                <button type="button" class="btn secondary-btn" id="cancel-invite">Cancel</button>
-                            </div>
-                        </form>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section" style="display: none;">
+            <h2>Dashboard</h2>
+            <div class="dashboard-grid">
+                <!-- Statistics Cards -->
+                <div class="stats-container">
+                    <div class="stats-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <div class="stats-info">
+                            <h3>Projects</h3>
+                            <span id="projects-count">0</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Team Member Details Modal -->
-                <div id="member-details-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <div id="member-details-content">
-                            <!-- Member details will be populated dynamically -->
+                    <div class="stats-card">
+                        <i class="fas fa-tasks"></i>
+                        <div class="stats-info">
+                            <h3>Tasks</h3>
+                            <span id="tasks-count">0</span>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-file-alt"></i>
+                        <div class="stats-info">
+                            <h3>Documents</h3>
+                            <span id="docs-count">0</span>
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stats-info">
+                            <h3>Team Members</h3>
+                            <span id="users-count">0</span>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
+
+                <!-- Recent Activities -->
+                <div class="dashboard-section">
+                    <h3>Recent Activities</h3>
+                    <div id="recent-activities" class="activities-container"></div>
+                </div>
+
+                <!-- Upcoming Deadlines -->
+                <div class="dashboard-section">
+                    <h3>Upcoming Deadlines</h3>
+                    <div id="upcoming-deadlines" class="deadlines-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h2>Projects</h2>
+                <button id="add-project-btn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add Project
+                </button>
+            </div>
+            <div class="filter-bar">
+                <input type="text" id="project-search" placeholder="Search projects...">
+                <select id="project-status-filter">
+                    <option value="">All Statuses</option>
+                    <option value="planning">Planning</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="review">Review</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <div id="projects-container" class="projects-grid"></div>
+        </section>
+
+        <!-- Tasks Section (Kanban Board) -->
+        <section id="tasks" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h2>Tasks</h2>
+                <button id="add-task-btn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add Task
+                </button>
+            </div>
+            <div class="filter-bar">
+                <input type="text" id="task-search" placeholder="Search tasks...">
+                <select id="task-project-filter">
+                    <option value="">All Projects</option>
+                </select>
+                <select id="task-status-filter">
+                    <option value="">All Statuses</option>
+                    <option value="todo">To Do</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="review">Review</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <div class="kanban-board">
+                <div class="kanban-column">
+                    <h3>To Do</h3>
+                    <div id="todo-tasks" class="task-list"></div>
+                </div>
+                <div class="kanban-column">
+                    <h3>In Progress</h3>
+                    <div id="progress-tasks" class="task-list"></div>
+                </div>
+                <div class="kanban-column">
+                    <h3>Review</h3>
+                    <div id="review-tasks" class="task-list"></div>
+                </div>
+                <div class="kanban-column">
+                    <h3>Completed</h3>
+                    <div id="completed-tasks" class="task-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Documents Section -->
+        <section id="documents" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h2>Documents</h2>
+                <button id="add-document-btn" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add Document
+                </button>
+            </div>
+            <div class="filter-bar">
+                <input type="text" id="document-search" placeholder="Search documents...">
+                <select id="document-project-filter">
+                    <option value="">All Projects</option>
+                </select>
+                <select id="document-type-filter">
+                    <option value="">All Types</option>
+                    <option value="documentation">Documentation</option>
+                    <option value="report">Report</option>
+                    <option value="design">Design</option>
+                </select>
+            </div>
+            <div id="documents-container" class="documents-grid"></div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="content-section" style="display: none;">
+            <div class="section-header">
+                <h2>Team Members</h2>
+                <button id="invite-team-btn" class="btn-primary">
+                    <i class="fas fa-user-plus"></i> Invite Member
+                </button>
+            </div>
+            <div class="filter-bar">
+                <input type="text" id="team-search" placeholder="Search team members...">
+                <select id="team-role-filter">
+                    <option value="">All Roles</option>
+                    <option value="developer">Developer</option>
+                    <option value="designer">Designer</option>
+                    <option value="manager">Manager</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div id="team-container" class="team-grid"></div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="project-modal-title">Add New Project</h2>
+            <form id="project-form">
+                <input type="hidden" id="project-id">
+                <div class="form-group">
+                    <label for="project-name">Project Name</label>
+                    <input type="text" id="project-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Description</label>
+                    <textarea id="project-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-start-date">Start Date</label>
+                    <input type="date" id="project-start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-end-date">End Date</label>
+                    <input type="date" id="project-end-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-status">Status</label>
+                    <select id="project-status" required>
+                        <option value="planning">Planning</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="review">Review</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="project-team">Team Members</label>
+                    <select id="project-team" multiple required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-project" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="task-modal-title">Add New Task</h2>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                <div class="form-group">
+                    <label for="task-title">Task Title</label>
+                    <input type="text" id="task-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-description">Description</label>
+                    <textarea id="task-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-project">Project</label>
+                    <select id="task-project" required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-assignee">Assignee</label>
+                    <select id="task-assignee" required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-status">Status</label>
+                    <select id="task-status" required>
+                        <option value="todo">To Do</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="review">Review</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-priority">Priority</label>
+                    <select id="task-priority" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-due-date">Due Date</label>
+                    <input type="date" id="task-due-date" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-task" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Document Modal -->
+    <div id="document-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="document-modal-title">Add New Document</h2>
+            <form id="document-form">
+                <input type="hidden" id="document-id">
+                <div class="form-group">
+                    <label for="document-title">Document Title</label>
+                    <input type="text" id="document-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="document-description">Description</label>
+                    <textarea id="document-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="document-project">Project</label>
+                    <select id="document-project" required>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="document-type">Type</label>
+                    <select id="document-type" required>
+                        <option value="documentation">Documentation</option>
+                        <option value="report">Report</option>
+                        <option value="design">Design</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="document-url">Document URL</label>
+                    <input type="url" id="document-url" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-document" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Document</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Team Invite Modal -->
+    <div id="invite-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Invite Team Member</h2>
+            <form id="invite-form">
+                <div class="form-group">
+                    <label for="invite-email">Email</label>
+                    <input type="email" id="invite-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="invite-role">Role</label>
+                    <select id="invite-role" required>
+                        <option value="developer">Developer</option>
+                        <option value="designer">Designer</option>
+                        <option value="manager">Manager</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-invite" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Send Invitation</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="app.js"></script>
